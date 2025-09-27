@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="form-container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input type="email" id="loginEmail" placeholder="Email" required>
+            <input type="password" id="loginPassword" placeholder="Password" required>
+
+            <div class="remember">
+                <input type="checkbox" id="rememberMe">
+                <label for="rememberMe">Remember Me</label>
+            </div>
+
+            <button type="submit">Login</button>
+            <p>Don’t have an account? <a href="signup.html">Sign Up</a></p>
+        </form>
+    </div>
+
+    <script>
+        // Auto-fill if Remember Me was checked
+        window.onload = function() {
+            let savedEmail = localStorage.getItem("rememberEmail");
+            let savedPassword = localStorage.getItem("rememberPassword");
+
+            if (savedEmail && savedPassword) {
+                document.getElementById("loginEmail").value = savedEmail;
+                document.getElementById("loginPassword").value = savedPassword;
+                document.getElementById("rememberMe").checked = true;
+            }
+        };
+
+        document.getElementById("loginForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            let savedEmail = localStorage.getItem("email");
+            let savedPassword = localStorage.getItem("password");
+
+            let enteredEmail = document.getElementById("loginEmail").value;
+            let enteredPassword = document.getElementById("loginPassword").value;
+            let remember = document.getElementById("rememberMe").checked;
+
+            if (enteredEmail === savedEmail && enteredPassword === savedPassword) {
+                alert("Login successful!");
+
+                if (remember) {
+                    localStorage.setItem("rememberEmail", enteredEmail);
+                    localStorage.setItem("rememberPassword", enteredPassword);
+                } else {
+                    localStorage.removeItem("rememberEmail");
+                    localStorage.removeItem("rememberPassword");
+                }
+
+                window.location.href = "welcome.html";
+            } else {
+                alert("Invalid email or password!");
+            }
+        });
+    </script>
+</body>
+
+</html>
